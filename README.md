@@ -49,19 +49,42 @@ Open http://localhost:3000
 
 ## Architecture (High-Level)
 
-[Browser UI]
-   |
-   | 1) /api/tmdb/search?query=...
-   v
-[Next.js Route Handler Proxy]  --(TMDB key in server env)-->  [TMDB API]
-   ^
-   | 2) JSON results
-   |
-[Client Components: Search / Results / Details / Favorites]
-   |
-   | LocalStorage read/write
-   v
-[LocalStorage: movie_explorer_favorites_v1]
+```text
+┌──────────────────────────────┐
+│          Browser UI          │
+│  Search / Results / Details  │
+│  Favorites (rate + note)     │
+└───────────────┬──────────────┘
+                │ 1) GET /api/tmdb/search?query=...
+                │ 2) GET /api/tmdb/movie/:id
+                v
+┌──────────────────────────────┐
+│   Next.js Route Handlers     │
+│   (Server-side TMDB Proxy)   │
+│  - Reads TMDB_* from env     │
+│  - Normalizes errors         │
+└───────────────┬──────────────┘
+                │ 3) HTTPS requests (server → TMDB)
+                v
+┌──────────────────────────────┐
+│           TMDB API           │
+│  /search/movie, /movie/{id}  │
+└───────────────┬──────────────┘
+                │ 4) JSON responses
+                v
+┌──────────────────────────────┐
+│          Browser UI          │
+│ Renders results + details    │
+└───────────────┬──────────────┘
+                │ LocalStorage read/write
+                v
+┌──────────────────────────────┐
+│        LocalStorage          │
+│ movie_explorer_favorites_v1  │
+└──────────────────────────────┘
+
+```
+**Key point:** TMDB credentials remain server-side via the proxy route handlers; the client only calls `/api/tmdb/*`.
 
 
 ## Technical Decisions & Tradeoffs
