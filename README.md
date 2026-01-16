@@ -108,8 +108,6 @@ Open http://localhost:3000
 
 ## Known Limitations & Improvements (With More Time)
 
-- Search pagination / infinite scrolling (currently basic results only)
-- Caching movie details to reduce repeat requests (in-memory map or stale-while-revalidate)
 - Better loading states (skeleton UI) and more granular error UX
 - Optional server persistence (PostgreSQL) + user identity/auth to sync favorites across devices
 - Accessibility polish (focus trap for modal, improved keyboard navigation, ARIA refinements)
