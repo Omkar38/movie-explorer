@@ -12,7 +12,7 @@ export async function GET(req: Request) {
   try {
     const { res, json } = await tmdbGet("/search/movie", {
       query,
-      include_adult: false,
+      include_adult: "false",
       language: "en-US",
       page: 1
     });
