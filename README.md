@@ -1,4 +1,4 @@
-# Movie Explorer (Take-Home)
+# Movie Explorer
 
 A small **Next.js + TypeScript** web app to:
 - Search movies by title (TMDB)
