@@ -47,6 +47,23 @@ Open http://localhost:3000
   - `GET /api/tmdb/movie/:id`
 - **Persistence**: Favorites are stored in LocalStorage under `movie_explorer_favorites_v1`.
 
+## Architecture (High-Level)
+
+[Browser UI]
+   |
+   | 1) /api/tmdb/search?query=...
+   v
+[Next.js Route Handler Proxy]  --(TMDB key in server env)-->  [TMDB API]
+   ^
+   | 2) JSON results
+   |
+[Client Components: Search / Results / Details / Favorites]
+   |
+   | LocalStorage read/write
+   v
+[LocalStorage: movie_explorer_favorites_v1]
+
+
 ## Technical Decisions & Tradeoffs
 
 ### 1) API proxy (security)
