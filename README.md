@@ -19,8 +19,8 @@ A small **Next.js + TypeScript** web app to:
 ### 1) Get a TMDB API credential
 
 You can use either:
-- **TMDB_API_KEY** (v3 API key), or
-- **TMDB_READ_ACCESS_TOKEN** (v4 read access token)
+- **TMDB_API_KEY** , or
+- **TMDB_READ_ACCESS_TOKEN** 
 
 Create a file named `.env.local` in the project root:
 
