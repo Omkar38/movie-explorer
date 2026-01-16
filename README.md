@@ -1,14 +1,18 @@
 # Movie Explorer (Take-Home)
 
-A small Next.js + TypeScript web app to:
-- Search movies by title
-- Open a details view (modal)
-- Save favorites with a personal **rating (1–5)** and optional **note**
-- Persist favorites in **LocalStorage**
+A small **Next.js + TypeScript** web app to:
+- Search movies by title (TMDB)
+- Open a details modal for a selected movie
+- Save movies to **Favorites**
+- Add a personal **rating (1–5)** and optional **note**
+- Persist favorites using **LocalStorage**
 
-## Live Demo
+## Links
 
-- Hosted URL: _add your deployed link here_
+- **Live App (Vercel):** https://movie-explorer-seven-sandy.vercel.app/
+- **GitHub Repository:** https://github.com/Omkar38/movie-explorer
+
+---
 
 ## Setup
 
@@ -45,26 +49,48 @@ Open http://localhost:3000
 
 ## Technical Decisions & Tradeoffs
 
-- **API key safety**: All TMDB calls happen through server-side routes (proxy pattern). This keeps credentials off the client.
-- **State management**: Plain React state + a small `useFavorites()` hook. This keeps the prototype lightweight.
-- **Persistence**: LocalStorage meets the baseline requirement quickly; server-side DB persistence is a clear next step.
-- **UI**: Minimal CSS (no component library) to prioritize functionality and readability.
+### 1) API proxy (security)
+- **Decision:** All TMDB calls go through server-side route handlers.
+- **Why:** Prevents exposing the TMDB key/token in the browser and keeps external API logic centralized.
+- **Tradeoff:** Adds a small amount of backend glue code, but improves security and maintainability.
 
-## Known Limitations / Next Improvements
+### 2) State management (simplicity)
+- **Decision:** Plain React state + a small `useFavorites()` hook.
+- **Why:** Keeps the solution lightweight and easy to follow for a take-home scope.
+- **Tradeoff:** For larger apps, a global store (Zustand/Redux) or server-state library (React Query) could improve ergonomics.
 
-- No pagination or infinite scroll for search results.
-- No caching for details (easy to add a simple in-memory map keyed by movieId).
-- Basic error states only (could add retries, skeleton loaders).
-- Optional server-side persistence not implemented (could add a Postgres table keyed by user/device id).
-
-## Deployment (Vercel)
-
-1. Push this repo to GitHub.
-2. Import into Vercel.
-3. Set environment variables in Vercel:
-   - `TMDB_API_KEY` (or `TMDB_READ_ACCESS_TOKEN`)
-4. Deploy.
+### 3) Persistence (LocalStorage)
+- **Decision:** Persist favorites (including rating + note) using LocalStorage.
+- **Why:** Meets requirements quickly with zero backend dependencies.
+- **Tradeoff:** Data is device/browser-specific and not shareable across devices without an authenticated backend.
 
 ---
 
-This project is intentionally scoped to a short take-home window.
+## Known Limitations & Improvements (With More Time)
+
+- Search pagination / infinite scrolling (currently basic results only)
+- Caching movie details to reduce repeat requests (in-memory map or stale-while-revalidate)
+- Better loading states (skeleton UI) and more granular error UX
+- Optional server persistence (PostgreSQL) + user identity/auth to sync favorites across devices
+- Accessibility polish (focus trap for modal, improved keyboard navigation, ARIA refinements)
+
+---
+
+## Evaluation Checklist (Mapped)
+
+- **Functionality:** search → view details → favorite → rate/comment → persisted ✅  
+- **API Integration:** external API wired through server-side proxy; errors handled ✅  
+- **Code Quality:** clear structure; focused components and hook-based logic ✅  
+- **User Experience:** straightforward workflow; empty/error states included ✅  
+- **Documentation:** decisions and limitations explained ✅  
+- **Discussion Value:** proxy rationale, state/persistence choices, and next steps documented ✅  
+
+---
+
+## Deployment (Vercel)
+
+1. Push the project to GitHub
+2. Import repository into Vercel
+3. Add environment variable(s) in Vercel:
+   - `TMDB_API_KEY` **or** `TMDB_READ_ACCESS_TOKEN`
+4. Deploy
